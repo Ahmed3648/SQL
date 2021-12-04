@@ -46,3 +46,23 @@ where continent is not null
 group by continent
 order by 2 desc
 
+
+-- Shows Percentage of Population that has recieved at least one Covid Vaccine
+select location, max(population) as Populaion, max(cast(people_vaccinated as int)) as People_vaccinated,
+concat(round(((max(cast(people_vaccinated as int))/max(population))*100),2),'%') as Percentage_vaccincated
+from dbo.covid
+where continent is not null
+group by location
+order by round(((max(cast(people_vaccinated as int))/max(population))*100),2) desc
+
+
+-- Shows Percentage of Population that has recieved Booster Vaccine
+select location, max(population) as Populaion, max(cast(total_boosters as int)) as People_vaccinated,
+concat(round(((max(cast(total_boosters as int))/max(population))*100),2),'%') as Percentage_vaccinated
+from dbo.covid
+where continent is not null
+group by location
+order by round(((max(cast(total_boosters as int))/max(population))*100),2) desc
+
+
+
