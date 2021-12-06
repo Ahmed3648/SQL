@@ -44,13 +44,14 @@ from dbo.covid
 where continent is not null
 group by location
 
-select #population.population, #grouped_new_cases.new_cases, #grouped_new_deaths.new_deaths,
+select #population.location, #population.population, #grouped_new_cases.new_cases, #grouped_new_deaths.new_deaths,
 	round(#grouped_new_cases.new_cases/#population.population,5) as Cases_percentage,
 	round(#grouped_new_deaths.new_deaths/#population.population,5) as Death_Percentage
 from #population
 inner join #grouped_new_cases on #population.location = #grouped_new_cases.location
 inner join #grouped_new_deaths on #population.location = #grouped_new_deaths.location
 where #grouped_new_deaths.new_deaths is not null
+order by Cases_percentage desc
 
 
 
