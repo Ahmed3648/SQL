@@ -31,13 +31,15 @@ inner join #grouped_new_deaths on #grouped_new_cases.location = #grouped_new_dea
 where #grouped_new_deaths.new_deaths is not null
 order by Death_rate
 
-
+-- Death% & cases% out of population
+-- Created additional table that show each country population
+-- Used two inner joins to get new_cases and new_deaths data to join the with countires, then performed reuired calculations based on that.
 create table #population (
 location varchar (100),
 population float)
 
 insert into #population
-select location, sum(population) as Total_population
+select location, avg(population) as Total_population
 from dbo.covid
 where continent is not null
 group by location
